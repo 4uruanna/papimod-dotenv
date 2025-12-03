@@ -1,5 +1,7 @@
 <?php
 
+namespace Papimod\Dotenv;
+
 use Dotenv\Dotenv;
 use Papi\enumerator\AppBuilderEvents;
 
