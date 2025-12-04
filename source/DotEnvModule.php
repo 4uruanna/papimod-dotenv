@@ -10,7 +10,7 @@ final class DotenvModule extends Module
     public function __construct()
     {
         if (defined("PAPI_DOTENV_DIRECTORY") === false) {
-            define("PAPI_DOTENV_DIRECTORY", dirname(__DIR__, 3));
+            define("PAPI_DOTENV_DIRECTORY", dirname(__DIR__, 5));
         }
     }
 
