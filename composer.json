@@ -1,5 +1,6 @@
 {
     "name": "papimod/dotenv",
+    "description": "Module Papi",
     "type": "library",
     "license": "Apache-2.0",
     "autoload": {

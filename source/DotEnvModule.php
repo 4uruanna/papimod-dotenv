@@ -4,7 +4,7 @@ namespace Papimod\Dotenv;
 
 use Papi\ApiModule;
 
-final class DotenvModule extends ApiModule
+final class DotEnvModule extends ApiModule
 {
     public function __construct()
     {
