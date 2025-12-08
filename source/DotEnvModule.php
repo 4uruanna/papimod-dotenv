@@ -2,22 +2,27 @@
 
 namespace Papimod\Dotenv;
 
-use Papi\Module;
+use Papi\ApiModule;
 
-final class DotenvModule extends Module
+final class DotenvModule extends ApiModule
 {
     public function __construct()
     {
-        $this->configure();
+        $this->event_list = [LoadEnvEvent::class];
     }
 
-    protected string $path = __DIR__;
-
-    private function configure(): void
+    public function configure(): void
     {
-        if (defined("API_ENV_DIRECTORY") === false) {
-            define("API_ENV_DIRECTORY", dirname(__DIR__, 4));
-            $_SERVER["API_ENV_DIRECTORY"] = API_ENV_DIRECTORY;
+        if (defined("ENVIRONMENT_DIRECTORY") === false) {
+            define("ENVIRONMENT_DIRECTORY", dirname(__DIR__, 4));
         }
+
+        $_SERVER["ENVIRONMENT_DIRECTORY"] = ENVIRONMENT_DIRECTORY;
+
+        if (defined("ENVIRONMENT_FILE") === false) {
+            define("ENVIRONMENT_FILE", ".env");
+        }
+
+        $_SERVER["ENVIRONMENT_FILE"] = ENVIRONMENT_FILE;
     }
 }

@@ -2,24 +2,27 @@
 
 namespace Papimod\Dotenv\Test;
 
-use Papi\AppBuilder;
+use Papi\ApiBuilder;
+use Papi\Test\ApiBaseTestCase;
 use Papimod\Dotenv\DotenvModule;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Small;
-use PHPUnit\Framework\TestCase;
 
 #[CoversClass(DotenvModule::class)]
 #[Small]
-final class DotEnvModuleTest extends TestCase
+final class DotEnvModuleTest extends ApiBaseTestCase
 {
-    public function testLoadEnv(): void
+    public function testLoadModule(): void
     {
-        define("API_ENV_DIRECTORY", __DIR__);
+        define("ENVIRONMENT_DIRECTORY", __DIR__);
+        define("ENVIRONMENT_FILE", ".test.env");
 
-        $app = new AppBuilder()
+        $app = ApiBuilder::getInstance()
             ->setModules([DotenvModule::class])
             ->build();
 
-        $this->assertEquals("HELLO_WORLD", $_SERVER["HELLO_WORLD"]);
+        $this->assertEquals($_SERVER["ENVIRONMENT_DIRECTORY"], ENVIRONMENT_DIRECTORY);
+        $this->assertEquals($_SERVER["ENVIRONMENT_FILE"], ".test.env");
+        $this->assertEquals("HELLO_W0RLD", $_SERVER["HELLO_WORLD"]);
     }
 }
