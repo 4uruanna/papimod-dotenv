@@ -13,6 +13,9 @@ class LoadEnvEvent implements Event
         return EventPhases::BEFORE_BUILD;
     }
 
+    /**
+     * Load the environment file
+     */
     public function __invoke(mixed ...$args): void
     {
         $dotenv = Dotenv::createImmutable(ENVIRONMENT_DIRECTORY, ENVIRONMENT_FILE);

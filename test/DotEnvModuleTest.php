@@ -12,17 +12,24 @@ use PHPUnit\Framework\Attributes\Small;
 #[Small]
 final class DotEnvModuleTest extends ApiBaseTestCase
 {
+    public const ENV_FILE = ".test.env";
+    public const ENV_DIRECTORY = __DIR__;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        defined("ENVIRONMENT_DIRECTORY") || define("ENVIRONMENT_DIRECTORY", self::ENV_DIRECTORY);
+        defined("ENVIRONMENT_FILE") || define("ENVIRONMENT_FILE", self::ENV_FILE);
+    }
+
     public function testLoadModule(): void
     {
-        define("ENVIRONMENT_DIRECTORY", __DIR__);
-        define("ENVIRONMENT_FILE", ".test.env");
-
         ApiBuilder::getInstance()
             ->setModules([DotEnvModule::class])
             ->build();
 
-        $this->assertEquals($_SERVER["ENVIRONMENT_DIRECTORY"], ENVIRONMENT_DIRECTORY);
-        $this->assertEquals($_SERVER["ENVIRONMENT_FILE"], ".test.env");
+        $this->assertEquals(self::ENV_DIRECTORY, $_SERVER["ENVIRONMENT_DIRECTORY"]);
+        $this->assertEquals(self::ENV_FILE, $_SERVER["ENVIRONMENT_FILE"]);
         $this->assertEquals("HELLO_W0RLD", $_SERVER["HELLO_WORLD"]);
     }
 }
