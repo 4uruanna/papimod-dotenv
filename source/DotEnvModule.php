@@ -7,25 +7,42 @@ use Papi\ApiModule;
 
 final class DotEnvModule extends ApiModule
 {
-    public static string $DEFAULT_DIRECTORY;
-    public const DEFAULT_FILE = ".env";
-
-    public function __construct()
+    public static function getDefaultDirectory(): string
     {
-        self::$DEFAULT_DIRECTORY = dirname(__DIR__, 4);
+        return dirname(__DIR__, 4);
     }
 
+    public static function getDefaultFilename(): string
+    {
+        return ".env";
+    }
+
+    /**
+     * Configure the module
+     */
     public function configure(): void
     {
         $this->defineEnvironmentDirectory();
         $this->defineEnvironmentFile();
         $this->loadEnvironment();
+        $this->defineEnvironment();
     }
 
+    private function defineEnvironment(): void
+    {
+        $environment = strtolower($_SERVER["ENVIRONMENT"] ?? "development");
+        define("IS_PRODUCTION", $environment === "production");
+        define("IS_DEVELOPMENT", $environment === "development");
+        define("IS_TEST", $environment === "test");
+    }
+
+    /**
+     * Define the environment directory
+     */
     private function defineEnvironmentDirectory(): void
     {
         if (defined("ENVIRONMENT_DIRECTORY") === false) {
-            define("ENVIRONMENT_DIRECTORY", self::$DEFAULT_DIRECTORY);
+            define("ENVIRONMENT_DIRECTORY", self::getDefaultDirectory());
         }
 
         $_SERVER["ENVIRONMENT_DIRECTORY"] = ENVIRONMENT_DIRECTORY;
@@ -34,7 +51,7 @@ final class DotEnvModule extends ApiModule
     private function defineEnvironmentFile(): void
     {
         if (defined("ENVIRONMENT_FILE") === false) {
-            define("ENVIRONMENT_FILE", self::DEFAULT_FILE);
+            define("ENVIRONMENT_FILE", self::getDefaultFilename());
         }
 
         $_SERVER["ENVIRONMENT_FILE"] = ENVIRONMENT_FILE;
