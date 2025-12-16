@@ -2,6 +2,7 @@
 
 namespace Papimod\Dotenv;
 
+use Dotenv\Dotenv;
 use Papi\ApiModule;
 
 final class DotEnvModule extends ApiModule
@@ -11,7 +12,6 @@ final class DotEnvModule extends ApiModule
 
     public function __construct()
     {
-        $this->event_list = [LoadEnvEvent::class];
         self::$DEFAULT_DIRECTORY = dirname(__DIR__, 4);
     }
 
@@ -19,6 +19,7 @@ final class DotEnvModule extends ApiModule
     {
         $this->defineEnvironmentDirectory();
         $this->defineEnvironmentFile();
+        $this->loadEnvironment();
     }
 
     private function defineEnvironmentDirectory(): void
@@ -37,5 +38,11 @@ final class DotEnvModule extends ApiModule
         }
 
         $_SERVER["ENVIRONMENT_FILE"] = ENVIRONMENT_FILE;
+    }
+
+    private function loadEnvironment(): void
+    {
+        $dotenv = Dotenv::createImmutable(ENVIRONMENT_DIRECTORY, ENVIRONMENT_FILE);
+        $dotenv->load();
     }
 }
