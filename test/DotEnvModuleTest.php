@@ -31,5 +31,8 @@ final class DotEnvModuleTest extends ApiBaseTestCase
         $this->assertEquals(self::ENV_DIRECTORY, $_SERVER["ENVIRONMENT_DIRECTORY"]);
         $this->assertEquals(self::ENV_FILE, $_SERVER["ENVIRONMENT_FILE"]);
         $this->assertEquals("HELLO_W0RLD", $_SERVER["HELLO_WORLD"]);
+        $this->assertFalse(IS_PRODUCTION);
+        $this->assertFalse(IS_DEVELOPMENT);
+        $this->assertTrue(IS_TEST);
     }
 }

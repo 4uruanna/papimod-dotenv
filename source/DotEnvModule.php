@@ -31,9 +31,9 @@ final class DotEnvModule extends ApiModule
     private function defineEnvironment(): void
     {
         $environment = strtolower($_SERVER["ENVIRONMENT"] ?? "development");
-        define("IS_PRODUCTION", $environment === "production");
-        define("IS_DEVELOPMENT", $environment === "development");
-        define("IS_TEST", $environment === "test");
+        defined("IS_PRODUCTION") || define("IS_PRODUCTION", $environment === "production");
+        defined("IS_DEVELOPMENT") || define("IS_DEVELOPMENT", $environment === "development");
+        defined("IS_TEST") || define("IS_TEST", $environment === "test");
     }
 
     /**
