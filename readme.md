@@ -1,4 +1,3 @@
-
 # DotEnv Papi Module
 
 ![]( https://img.shields.io/badge/php-8.5-777BB4?logo=php)
@@ -10,7 +9,7 @@ Load `.env` when building your [papi](https://github.com/4uruanna/papi). This mo
 
 ## Configuration
 
-### `ENVIRONMENT_DIRECTORY` (CONSTANT)
+### `PAPI_DOTENV_DIRECTORY` (CONSTANT)
 
 |               |                                                   |
 |-:             |:-                                                 |
@@ -19,7 +18,7 @@ Load `.env` when building your [papi](https://github.com/4uruanna/papi). This mo
 |Description    | Directory where the .env file to load is located  |
 |Default        | _Root of your project_                            |
 
-### `ENVIRONMENT_FILE` (CONSTANT)
+### `PAPI_DOTENV_FILE` (CONSTANT)
 
 |               |                                                   |
 |-:             |:-                                                 |
