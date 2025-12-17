@@ -3,63 +3,42 @@
 namespace Papimod\Dotenv;
 
 use Dotenv\Dotenv;
-use Papi\ApiModule;
+use Papi\PapiModule;
 
-final class DotEnvModule extends ApiModule
+final class DotEnvModule extends PapiModule
 {
-    public static function getDefaultDirectory(): string
-    {
-        return dirname(__DIR__, 4);
-    }
-
-    public static function getDefaultFilename(): string
-    {
-        return ".env";
-    }
-
     /**
      * Configure the module
      */
-    public function configure(): void
+    public static function configure(): void
     {
-        $this->defineEnvironmentDirectory();
-        $this->defineEnvironmentFile();
-        $this->loadEnvironment();
-        $this->defineEnvironment();
-    }
-
-    private function defineEnvironment(): void
-    {
-        $environment = strtolower($_SERVER["ENVIRONMENT"] ?? "development");
-        defined("IS_PRODUCTION") || define("IS_PRODUCTION", $environment === "production");
-        defined("IS_DEVELOPMENT") || define("IS_DEVELOPMENT", $environment === "development");
-        defined("IS_TEST") || define("IS_TEST", $environment === "test");
-    }
-
-    /**
-     * Define the environment directory
-     */
-    private function defineEnvironmentDirectory(): void
-    {
-        if (defined("ENVIRONMENT_DIRECTORY") === false) {
-            define("ENVIRONMENT_DIRECTORY", self::getDefaultDirectory());
+        if (defined("PAPI_DOTENV_DIRECTORY") === false) {
+            define("PAPI_DOTENV_DIRECTORY", dirname(__DIR__, 4));
         }
 
-        $_SERVER["ENVIRONMENT_DIRECTORY"] = ENVIRONMENT_DIRECTORY;
-    }
-
-    private function defineEnvironmentFile(): void
-    {
-        if (defined("ENVIRONMENT_FILE") === false) {
-            define("ENVIRONMENT_FILE", self::getDefaultFilename());
+        if (defined("PAPI_DOTENV_FILE") === false) {
+            define("PAPI_DOTENV_FILE", ".env");
         }
 
-        $_SERVER["ENVIRONMENT_FILE"] = ENVIRONMENT_FILE;
-    }
-
-    private function loadEnvironment(): void
-    {
-        $dotenv = Dotenv::createImmutable(ENVIRONMENT_DIRECTORY, ENVIRONMENT_FILE);
+        $dotenv = Dotenv::createImmutable(PAPI_DOTENV_DIRECTORY, PAPI_DOTENV_FILE);
         $dotenv->load();
+        $environment = $_ENV["ENVIRONMENT"] ?? "";
+
+        switch ($environment) {
+            case Environment::DEVELOPMENT->value:
+                $environment = Environment::DEVELOPMENT;
+                break;
+            case Environment::PRODUCTION->value:
+                $environment = Environment::PRODUCTION;
+                break;
+            case Environment::TEST->value:
+                $environment = Environment::TEST;
+                break;
+            default:
+                $environment = Environment::DEVELOPMENT;
+                break;
+        }
+
+        defined("ENVIRONMENT") || define("ENVIRONMENT", $environment);
     }
 }
