@@ -2,37 +2,46 @@
 
 namespace Papimod\Dotenv\Test;
 
+use Dotenv\Dotenv;
 use Papi\ApiBuilder;
-use Papi\Test\ApiBaseTestCase;
+use Papi\PapiBuilder;
+use Papi\Test\PapiTestCase;
 use Papimod\Dotenv\DotEnvModule;
+use Papimod\Dotenv\Environment;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\Small;
+use Slim\App;
 
 #[CoversClass(DotEnvModule::class)]
-#[Small]
-final class DotEnvModuleTest extends ApiBaseTestCase
+final class DotEnvModuleTest extends PapiTestCase
 {
-    public const ENV_FILE = ".test.env";
-    public const ENV_DIRECTORY = __DIR__;
+    private PapiBuilder $builder;
 
     public function setUp(): void
     {
         parent::setUp();
-        defined("ENVIRONMENT_DIRECTORY") || define("ENVIRONMENT_DIRECTORY", self::ENV_DIRECTORY);
-        defined("ENVIRONMENT_FILE") || define("ENVIRONMENT_FILE", self::ENV_FILE);
+        defined("PAPI_DOTENV_DIRECTORY") || define("PAPI_DOTENV_DIRECTORY", __DIR__);
+        defined("PAPI_DOTENV_FILE") || define("PAPI_DOTENV_FILE", ".test.env");
+        $this->builder = new PapiBuilder();
     }
 
     public function testLoadModule(): void
     {
-        ApiBuilder::getInstance()
-            ->setModules([DotEnvModule::class])
+        $this->builder
+            ->addModules(DotenvModule::class)
             ->build();
 
-        $this->assertEquals(self::ENV_DIRECTORY, $_SERVER["ENVIRONMENT_DIRECTORY"]);
-        $this->assertEquals(self::ENV_FILE, $_SERVER["ENVIRONMENT_FILE"]);
         $this->assertEquals("HELLO_W0RLD", $_SERVER["HELLO_WORLD"]);
-        $this->assertFalse(IS_PRODUCTION);
-        $this->assertFalse(IS_DEVELOPMENT);
-        $this->assertTrue(IS_TEST);
+        $this->assertEquals(ENVIRONMENT, Environment::TEST);
+    }
+
+    public function testBuildAndRebuild(): void
+    {
+        $app = $this->builder
+            ->addModules(DotenvModule::class)
+            ->build();
+        $this->assertInstanceOf(App::class, $app);
+
+        $app = $this->builder->build();
+        $this->assertInstanceOf(App::class, $app);
     }
 }
