@@ -25,7 +25,7 @@ final class DotEnvModuleTest extends PapiTestCase
     public function testLoadModule(): void
     {
         $this->builder
-            ->addModules(DotenvModule::class)
+            ->addModule(DotenvModule::class)
             ->build();
 
         $this->assertEquals("HELLO_W0RLD", $_SERVER["HELLO_WORLD"]);
@@ -35,7 +35,7 @@ final class DotEnvModuleTest extends PapiTestCase
     public function testBuildAndRebuild(): void
     {
         $app = $this->builder
-            ->addModules(DotenvModule::class)
+            ->addModule(DotenvModule::class)
             ->build();
         $this->assertInstanceOf(App::class, $app);
 

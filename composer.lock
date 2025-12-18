@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5b83abd39414cce75725df2b0c9c5434",
+    "content-hash": "4684074edc6b20661057e3d7767f9152",
     "packages": [
         {
             "name": "fig/http-message-util",
@@ -237,16 +237,16 @@
         },
         {
             "name": "papi/papi",
-            "version": "v2.0.0",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/4uruanna/papi.git",
-                "reference": "bd9ad534fc23f0609fc2fa3f175905b9fdb076e5"
+                "reference": "894e0fe3b2bfb9cde29eb22ea8ee6857e07f79de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/4uruanna/papi/zipball/bd9ad534fc23f0609fc2fa3f175905b9fdb076e5",
-                "reference": "bd9ad534fc23f0609fc2fa3f175905b9fdb076e5",
+                "url": "https://api.github.com/repos/4uruanna/papi/zipball/894e0fe3b2bfb9cde29eb22ea8ee6857e07f79de",
+                "reference": "894e0fe3b2bfb9cde29eb22ea8ee6857e07f79de",
                 "shasum": ""
             },
             "require": {
@@ -279,9 +279,9 @@
             "description": "Slim Framework Builder",
             "support": {
                 "issues": "https://github.com/4uruanna/papi/issues",
-                "source": "https://github.com/4uruanna/papi/tree/v2.0.0"
+                "source": "https://github.com/4uruanna/papi/tree/v2.1.0"
             },
-            "time": "2025-12-17T14:33:58+00:00"
+            "time": "2025-12-18T14:30:01+00:00"
         },
         {
             "name": "php-di/invoker",
