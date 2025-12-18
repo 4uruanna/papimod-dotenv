@@ -2,8 +2,6 @@
 
 namespace Papimod\Dotenv\Test;
 
-use Dotenv\Dotenv;
-use Papi\ApiBuilder;
 use Papi\PapiBuilder;
 use Papi\Test\PapiTestCase;
 use Papimod\Dotenv\DotEnvModule;
